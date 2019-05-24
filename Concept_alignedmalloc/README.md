@@ -8,6 +8,7 @@
 
 ## 📌 주요 소스
 
+
     void * aligned_malloc(size_t size, int align) {
      /* 0보다 작은 바이트를 정렬할 수 없음 */
      if (align < 0) {
@@ -56,21 +57,21 @@
       //	4		= 00000100
       // 2의 거듭제곱이 아님!
 
-    ptr = (void*)(((size_t)p + sizeof(void*) + align - 1) & ~(align - 1));
-    // 반올림해서 align byte에 맞는 시작 주소값을 찾는 것
+      ptr = (void*)(((size_t)p + sizeof(void*) + align - 1) & ~(align - 1));
+      // 반올림해서 align byte에 맞는 시작 주소값을 찾는 것
 
-    /* 전체 메모리 영역의 시작 주소 위에 malloc()의 주소 저장 */
-    *((void**)((size_t)ptr - sizeof(void*))) = p;
+      /* 전체 메모리 영역의 시작 주소 위에 malloc()의 주소 저장 */
+      *((void**)((size_t)ptr - sizeof(void*))) = p;
 
-    /* 정렬된 메모리 주소 반환 */
-    return ptr;
-   }
-   return NULL;
-  }
+      /* 정렬된 메모리 주소 반환 */
+      return ptr;
+     }
+     return NULL;
+    }
 
-  void aligned_free(void *p) {
-   /* 전체 메모리 영역의 시작 부분에 저장된 메모리 주소 획득 */
-   void *ptr = *((void**)((size_t)p - sizeof(void*)));
-   free(ptr);
-   return;
-  }
+    void aligned_free(void *p) {
+     /* 전체 메모리 영역의 시작 부분에 저장된 메모리 주소 획득 */
+     void *ptr = *((void**)((size_t)p - sizeof(void*)));
+     free(ptr);
+     return;
+    }
